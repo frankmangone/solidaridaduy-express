@@ -128,7 +128,7 @@ var dummy_initiatives = [
 		address: 'Ideario Artiguista y Liga Federal',
 		hood: 'Los Bulevares',
 		province: 'Montevideo',
-		category: 'OLLA',
+		category: 'MERIENDA',
 		contact_phones: ['097 151 643', '096 671 054', '091 067 740'],
 		geolocation: {
 			latitude: -34.820697,
