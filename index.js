@@ -30,15 +30,16 @@ app.post('/admin/login', function(req, res) {
 	if (!!admin) {
 		bcrypt.compare(req.body.password, admin.password_digest, function(err, result) {
 			if (result) {
-				res.json(admin)
+				// TODO: No need to return the full admin entity, just a token and some basic info
+				res.json(admin);
 			}
 			else {
-				res.json({ validation_errors: { password: 'INVALID' } })
+				res.json({ validation_errors: { password: 'INVALID_PASSWORD' } });
 			}
 		})
 	}
 	else {
-		res.json({ validation_errors: { email: 'INVALID' } })
+		res.json({ validation_errors: { email: 'EMAIL_NOT_FOUND' } });
 	}
 })
 
