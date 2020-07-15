@@ -15,6 +15,7 @@ const app     = express();
 app.use(body_parser.json());
 app.use(cors());
 
+
 /* Dummy data ------------------------------------------------ */
 var initiatives = require('./dummy_initiatives');
 initiatives = initiatives.initiatives;
@@ -26,20 +27,20 @@ for (var i = 0; i < admins.length; i++) {
 }
 /* ----------------------------------------------------------- */
 
+
 //
 
 // Authentication middleware --------------------------------------
 function authenticateJWT(req, res, next) {
-	console.log(req.headers);
 	const authHeader = req.headers.authorization;
 
 	if (authHeader) {
 		// The split is because of the format: Bearer ajshgdqe...
-		const token = authHeader.split(' ')[1];
-
+		const token = authHeader.split('')[1];
 		jwt.verify(token, access_token_secret, (err) => {
 			if (err) {
 				// Return Forbidden
+				console.log(err);
 				return res.sendStatus(403);
 			}
 			next();
@@ -61,7 +62,10 @@ app.post('/admin/login', function(req, res) {
 	if (!!admin) {
 		bcrypt.compare(req.body.password, admin.password_digest, function(err, result) {
 			if (result) {
-				const access_token = jwt.sign({ email: admin.email }, access_token_secret);
+				const access_token = jwt.sign(
+										{ email: admin.email }, 
+										access_token_secret,
+										{ expiresIn: '20m' });
 				res.json({ access_token });
 			}
 			else {
@@ -74,7 +78,19 @@ app.post('/admin/login', function(req, res) {
 	}
 })
 
-// initiative Routes ----------------------------------------------
+app.get('/admin/initiatives', authenticateJWT, function(req, res) {
+	// TODO: Pagination?
+	res.json(initiatives);
+})
+
+app.get('/admin/verify', authenticateJWT, function(req,res) {
+	// TODO: Use this route to verify that the user is still logged in
+	res.json({});
+});
+
+
+
+// Initiative Routes ----------------------------------------------
 
 app.get('/initiative/:id', function(req, res) {
 	res.json(initiatives.find(init => init._id == req.params.id));
@@ -82,11 +98,6 @@ app.get('/initiative/:id', function(req, res) {
 
 app.get('/initiatives/search', function(req, res) {
 	// TODO: Perform the search!
-	res.json(initiatives);
-})
-
-app.get('/initiatives/list', authenticateJWT, function(req, res) {
-	// TODO: Pagination?
 	res.json(initiatives);
 })
 
