@@ -8,6 +8,7 @@ var dummy_initiatives = [
 		province: 'Montevideo',
 		category: 'PUNTO_DONACION',
 		contact_phones: ['098 176 182', '092 721 887'],
+		emergency_state: false,
 		geolocation: {
 			latitude: -34.878388,
 			longitude:-56.250416 
@@ -42,6 +43,7 @@ var dummy_initiatives = [
 		province: 'Montevideo',
 		category: 'PUNTO_DONACION',
 		contact_phones: ['098 600 393'],
+		emergency_state: true,
 		geolocation: {
 			latitude: -34.866492,
 			longitude: -56.228167 
@@ -88,6 +90,7 @@ var dummy_initiatives = [
 		province: 'Montevideo',
 		category: 'OLLA',
 		contact_phones: ['094 413 087'],
+		emergency_state: false,
 		geolocation: {
 			latitude: -34.870646,
 			longitude: -56.232576 
@@ -134,6 +137,7 @@ var dummy_initiatives = [
 		province: 'Montevideo',
 		category: 'MERIENDA',
 		contact_phones: ['097 151 643', '096 671 054', '091 067 740'],
+		emergency_state: false,
 		geolocation: {
 			latitude: -34.820697,
 			longitude: -56.282861 
@@ -180,6 +184,7 @@ var dummy_initiatives = [
 		province: 'Canelones',
 		category: 'CANASTA',
 		contact_phones: ['093 818 549', '094 306 437'],
+		emergency_state: true,
 		geolocation: {
 			latitude: -34.821545,
 			longitude: -55.988923

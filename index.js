@@ -36,11 +36,10 @@ function authenticateJWT(req, res, next) {
 
 	if (authHeader) {
 		// The split is because of the format: Bearer ajshgdqe...
-		const token = authHeader.split('')[1];
+		const token = authHeader.split(' ')[1];
 		jwt.verify(token, access_token_secret, (err) => {
 			if (err) {
 				// Return Forbidden
-				console.log(err);
 				return res.sendStatus(403);
 			}
 			next();
@@ -66,7 +65,13 @@ app.post('/admin/login', function(req, res) {
 										{ email: admin.email }, 
 										access_token_secret,
 										{ expiresIn: '20m' });
-				res.json({ access_token });
+				res.json({ 
+					admin: { 
+						first_name: admin.first_name,
+						last_name:  admin.last_name,
+					},
+					access_token 
+				});
 			}
 			else {
 				res.json({ validation_errors: { password: 'INVALID_PASSWORD' } });
@@ -83,9 +88,9 @@ app.get('/admin/initiatives', authenticateJWT, function(req, res) {
 	res.json(initiatives);
 })
 
-app.get('/admin/verify', authenticateJWT, function(req,res) {
+app.get('/admin/verify', authenticateJWT, function(req, res) {
 	// TODO: Use this route to verify that the user is still logged in
-	res.json({});
+	res.send(true);
 });
 
 
